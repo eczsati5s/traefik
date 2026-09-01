@@ -1,30 +1,36 @@
----
-title: File
----
+# Traefik
 
-# Traefik & File
+[![Build Status](https://github.com/traefik/traefik/workflows/Main/badge.svg)](https://github.com/traefik/traefik/actions)
+[![Go Report Card](https://goreportcard.com/badge/github.com/traefik/traefik)](https://goreportcard.com/report/github.com/traefik/traefik)
+[![Documentation](https://img.shields.io/badge/docs-v3.0-blue.svg)](https://doc.traefik.io/traefik/)
 
-The file provider lets you define the dynamic configuration in a file.
+Traefik (pronounced *traffic*) is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy.
+Traefik integrates with your existing infrastructure components (Docker, Swarm, Kubernetes, Marathon, Consul, Etcd, Rancher, Amazon ECS, ...) and configures itself automatically and dynamically.
 
-## Configuration Examples
+## Quick Start
 
-```yaml
-# Dynamic configuration
-tcp:
-  routers:
-    my-router:
-      rule: "HostSNI(`example.com`)"
-      service: my-service
-      tls: {}
+Run Traefik using Docker:
 
-http:
-  services:
-    my-service:
-      loadBalancer:
-        servers:
-          - url: "http://example.com"
+```bash
+docker run -d -p 8080:8080 -p 80:80 \
+  -v /var/run/docker.sock:/var/run/docker.sock:ro \
+  traefik:v3.0 --api.insecure=true --providers.docker
 ```
 
-## Reference
+Access the dashboard at `http://localhost:8080/dashboard/`.
 
-For the full documentation, see [File Provider](https://doc.traefik.io/traefik/providers/file/).
+## Features
+
+- Continuously updates its configuration (No restarts required)
+- Supports multiple providers: Docker, Kubernetes, Consul, Etcd, etc.
+- Automatic HTTPS via Let's Encrypt (ACME support)
+- Webhooks and metrics (Prometheus, Datadog, StatsD)
+- HTTP/2 and gRPC support
+
+## Documentation
+
+Comprehensive documentation is available at [doc.traefik.io/traefik/](https://doc.traefik.io/traefik/).
+
+## License
+
+Traefik is licensed under the [MIT License](LICENSE).
